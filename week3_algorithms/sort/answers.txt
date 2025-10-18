@@ -1,0 +1,16 @@
+sort1 uses: Bubble Sort
+
+How do you know?:  I tested all the algorithms by time command.
+I identified  sort1 uses bubble sort. Since that is is the worst at the large dataset. However it's the
+algorithm that give the almost best performance at sorted datasets.
+
+sort2 uses: Merge Sort
+
+How do you know?: I identified  sort2 as merge sort. Since the second sort is better than the others by far.
+Especially at the big dataset. Moreover, it gives almost same performance for all three types of dataset.
+
+sort3 uses: Selection Sort
+
+How do you know?: I identified  sort3 as selection sort, because it's way better than sort1 however it's
+worst than sort2 by far. Also, it doesn't change a lot by types of datasets and it's characteristics of
+selection sort.
