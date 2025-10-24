@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+
+                let corrects = document.querySelectorAll('.correct');
+                let incorrects = document.querySelectorAll('.incorrect');
+                let allButtons = [];
+
+                // multiple choice
+                corrects.forEach(btn => {
+                    allButtons.push(btn);
+                    btn.addEventListener('click', function() {
+                        btn.style.backgroundColor = '#00ff00';
+                        btn.style.color = '#ffffff';
+                        allButtons.forEach(b => b.disabled = true);
+                        let feedback = btn.parentElement.querySelector('.feedback');
+                        feedback.innerHTML = 'Correct!';
+                        feedback.className = 'feedback-correct';
+                    });
+                });
+
+                incorrects.forEach(btn => {
+                    allButtons.push(btn);
+                    btn.addEventListener('click', function() {
+                        btn.style.backgroundColor = '#ff0000';
+                        btn.style.color = '#ffffff';
+                        allButtons.forEach(b => b.disabled = true);
+                        let feedback = btn.parentElement.querySelector('.feedback');
+                        feedback.innerHTML = 'Incorrect :(';
+                        feedback.className = 'feedback-incorrect';
+                    });
+                });
+
+                // free response
+                document.querySelector('#confirm').addEventListener('click', function() {
+                    let input = document.querySelector('input');
+                    let correctAnswer = 'The Unknown';
+                    let answer = input.value.trim().toLowerCase();
+
+                    let feedback = input.parentElement.querySelector('.feedback');
+
+                    if (answer === correctAnswer.toLowerCase()) {
+                        input.style.borderColor = '#00ff00'; // Changing the border color looks better by far
+                        feedback.innerHTML = 'Correct!';
+                        feedback.className = 'feedback-correct';
+                    } else {
+                        input.style.borderColor = '#ff0000'; // Changing the border color looks better by far
+                        feedback.innerHTML = `Incorrect :( The correct answer is "${correctAnswer}".`;
+                        feedback.className = 'feedback-incorrect';
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice</h2>
+                <hr>
+                <h3>Which of the following is not one of the names Gregory gives his frog in Over the Garden Wall?</h3>
+                <hr>
+                <button class="incorrect">Wirt</button>
+                <button class="incorrect">Jason Funderburker</button>
+                <button class="incorrect">Dr. Cucumber</button>
+                <button class="correct">Beatrice</button>
+                <button class="incorrect">Kitty</button>
+                <p class="feedback"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <h3>What is the name of the mysterious forest where Wirt and Greg find themselves lost in Over the Garden Wall?</h3>
+                <input type="text">
+                <button id="confirm" type="submit">Confirm</button>
+                <p class="feedback"></p>
+            </div>
+        </div>
+    </body>
+
+</html>

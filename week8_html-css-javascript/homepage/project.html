@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link href="./styles.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="assets/logo.png">
+        <script src="./script.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let projects = document.querySelectorAll('#private-repo');
+                // id needs to be unique, but class makes buttons looks text :(
+                for(let i = 0; i < projects.length; ++i){
+                    projects[i].addEventListener('click', function(){
+                        alert('The repostory is private. Please, try again later or contact me.');
+                });
+                }
+
+             });
+        </script>
+        <title>My Projects</title>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid">
+
+                <a class="navbar-brand" href="index.html">
+                    <div class="collapse navbar-collapse">
+                        <img src="assets/logo.png" alt="Muharrem's logo" >
+                        <p id="name-nav">Muharrem DEMIR</p>
+                    </div>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="experiences.html">EXPERIENCES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">CONTACT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="project.html">PROJECTS</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+        <pre>
+
+        </pre>
+
+        <section class="container my-5" id="projects-section">
+            <h3 class="text-center mb-5 project-heading">MY PROJECTS</h3>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+                <div class="col project-block-div">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Eisenhower Productivity App</h5>
+                            <span class="badge bg-primary mb-2 tech-badge">Flutter / Dart</span>
+                            <p class="card-text">A Flutter-based productivity app that helps users plan their days efficiently using the Eisenhower Matrix method. It focuses on task prioritization and time management.</p>
+                            <div class="mt-auto pt-2">
+                                <a id="private-repo" href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col project-block-div">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">AI Language Chat App</h5>
+                            <span class="badge bg-info mb-2 tech-badge">Flutter</span>
+                            <p class="card-text">A Flutter application powered by AI that helps users improve their English speaking skills through voice interaction and intelligent conversation.</p>
+                            <div class="mt-auto pt-2">
+                                <a id="private-repo" href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col project-block-div">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">IoT-Bridge</h5>
+                            <span class="badge bg-success mb-2 tech-badge">C# / MQTT.net</span>
+                            <p class="card-text">An IoT project designed to act as a communication bridge between connected devices, managing data transfer and control operations.</p>
+                            <div class="mt-auto pt-2">
+                                <a href="https://github.com/muharremdemirr/IoT-Bridge" class="btn btn-outline-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col project-block-div">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Maze Bomber Game</h5>
+                            <span class="badge bg-secondary mb-2 tech-badge">C++</span>
+                            <p class="card-text">A fun and strategic maze game where players navigate through levels and eliminate targets using tactical moves.</p>
+                            <div class="mt-auto pt-2">
+                                <a href="https://github.com/muharremdemirr/Maze_Bomber_Game" class="btn btn-outline-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col project-block-div">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Heart Attack Prediction</h5>
+                            <span class="badge bg-danger mb-2 tech-badge">Python / Flask</span>
+                            <p class="card-text">A data science project that predicts heart attack risk using machine learning models and real-world health data.</p>
+                            <div class="mt-auto pt-2">
+                                <a href="https://github.com/muharremdemirr/Heart-Attack-Prediction" class="btn btn-outline-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col project-block-div">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Bank Database Simulation</h5>
+                            <span class="badge bg-dark mb-2 tech-badge">C# / SQL</span>
+                            <p class="card-text">A simple banking system simulation that manages accounts and transaction records using database logic.</p>
+                            <div class="mt-auto pt-2">
+                                <a href="https://github.com/muharremdemirr/Bank-Database" class="btn btn-outline-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </body>
+
+</html>
+
+

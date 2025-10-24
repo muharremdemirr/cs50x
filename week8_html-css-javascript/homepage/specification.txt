@@ -1,0 +1,34 @@
+HTML
+I created four HTML pages:
+1. index.html – Introduction, about me, and tools & technologies.
+2. experiences.html – Work experience and education sections.
+3. contact.html – Contact information with mail, phone, and social links.
+4. project.html – A list of my projects with descriptions and repository links.
+
+HTML tags
+<html>, <head>, <body>, <meta>, <link>, <script>, <title>,
+<nav>, <div>, <img>, <a>, <p>, <h3>, <ul>, <li>, <button>,
+<span>, <section>, <strong>, <pre>
+
+CSS
+Custom stylesheet: styles.css
+
+At least 5 different selectors:
+.navbar, h3, p, .project-block-div, #name-nav, .company-logo
+
+At least 5 different CSS properties:
+color, background-color, font-size, font-family, margin
+
+Bootstrap
+
+- Responsive navbar Hamburger
+- Accordion for experiences
+- Grid system for project cards
+
+JavaScript
+
+JavaScript file: script.js
+
+Functions implemented:
+- Adds animation to tools.
+- Displays alert() message when user clicks a private project link inline script
