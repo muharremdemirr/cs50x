@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Deposit
+{% endblock %}
+
+{% block main %}
+    <h2 class="mb-4">Deposit Money</h2>
+
+    <form action="/deposit" method="post" class="mx-auto" style="max-width: 400px;">
+        <div class="mb-3">
+            <input class="form-control" name="money" placeholder="Amount ($)" required type="number" min="1" step="0.01">
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control" name="card-number" placeholder="Card Number" required type="number">
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control" name="name" placeholder="Name on Card" required type="text">
+        </div>
+
+        <div class="row g-2 mb-3">
+            <div class="col">
+                <input class="form-control" name="skt-month" placeholder="Expire Month (MM)" required type="number" min="1" max="12">
+            </div>
+            <div class="col">
+                <input class="form-control" name="skt-year" placeholder="Expire Year (YYYY)" required type="number" min="2025">
+            </div>
+            <div class="col-3">
+                <input class="form-control" name="cvv" placeholder="CVV" required type="number" min="100" max="9999">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <button class="btn btn-success w-100" type="submit">Deposit Money</button>
+        </div>
+
+        <div class="border rounded p-3 bg-light">
+            <p><strong>Deposit Amount:</strong> ${{ deposit_amount if deposit_amount else "—" }}</p>
+            <p><strong>Cash Before:</strong> ${{ cash_before if cash_before else "—" }}</p>
+            <p><strong>Cash After:</strong> ${{ cash_after if cash_after else "—" }}</p>
+        </div>
+    </form>
+
+{% endblock %}

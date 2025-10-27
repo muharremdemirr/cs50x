@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    transaction history
+{% endblock %}
+
+{% block main %}
+
+      <div class="section">
+         <table class="table table-striped table-hover align-middle text-center">
+
+            <theads class="table-light">
+                <tr>
+                    <th>Symbol</th>
+                    <th>Shares</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Cash Before</th>
+                    <th>Cash After</th>
+                    <th>Transaction</th>
+                    <th>Date</th>
+                </tr>
+            </theads>
+
+            <tbody>
+
+                {% if history %}
+
+                    {% for transaction in history %}
+                        <tr>
+                            <td>{{ transaction.symbol }}</td>
+                            <td>{{ transaction.shares }}</td>
+                            <td>{{ transaction.price }}</td>
+                            <td>{{ transaction.total }}</td>
+                            <td>{{ transaction.cash_before }}</td>
+                            <td>{{ transaction.cash_after }}</td>
+                            <td>{{ transaction.transaction_type }}</td>
+                            <td>{{ transaction.date }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No transaction in history yet.</td>
+                    </tr>
+                {% endif %}
+
+
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

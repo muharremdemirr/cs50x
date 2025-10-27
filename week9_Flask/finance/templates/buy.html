@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    quote
+{% endblock %}
+
+
+
+{% block main %}
+
+    <div>
+        <form action="/buy" method="post" class="d-flex justify-content-center">
+            <input autocomplete="off" autofocus class="form-control w-auto me-2" name="symbol" placeholder="Stock Symbol" required type="text">
+            <input autocomplete="off" autofocus class="form-control w-auto me-2" name="shares" placeholder="Number of Share" required type="number" min="1">
+            <button class="btn btn-primary" type="submit">Buy</button>
+        </form>
+    </div>
+
+
+    <div class="d-flex justify-content-center align-items-center gap-2" style="margin-top: 15px;">
+        <p style="text-align: cenrter; font-weight: bold; margo" >Cash</p>
+        <p >{{ cash }}</p>
+    </div>
+
+{% endblock %}
+
