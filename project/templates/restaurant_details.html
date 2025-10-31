@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ restaurant_info['name'] }}
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+
+    <!-- Restaurant Info -->
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body">
+            <h3 class="card-title">{{ restaurant_info['name'] }}</h3>
+
+            {% if restaurant_info['status'] == 'open' %}
+                <span class="badge bg-success mb-2">🟢 Open</span>
+            {% else %}
+                <span class="badge bg-danger mb-2">🔴 Closed</span>
+            {% endif %}
+
+            <p class="card-text mb-1"><strong>Address:</strong> {{ restaurant_info['address'] or 'N/A' }}</p>
+            <p class="card-text mb-1"><strong>Phone:</strong> {{ restaurant_info['phone'] or 'N/A' }}</p>
+            <p class="card-text text-muted">{{ restaurant_info['description'] or 'No description available.' }}</p>
+
+             <div class="d-flex justify-content-start  align-items-center gap-5">
+                {% if restaurant_info.rating > 0.0 %}
+                    <p><small>⭐{{ restaurant_info.rating }}</small></p>
+                {% else %}
+                     <p><small>There is no rating yet.</small></p>
+                {% endif %}
+                <p><small>min: {{restaurant_info.min_amount}}</small></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Butonları - Form ile -->
+    <div class="d-flex mb-4 border rounded">
+        <form action="/restaurant-details" method="post" class="d-flex w-100">
+            <input type="hidden" name="restaurant_id" value="{{ restaurant_info['id'] }}">
+
+            <!-- Menu Butonu -->
+            <button type="submit" name="active_tab" value="menu"
+                    class="btn flex-fill {% if active_tab == 'menu' %}btn-primary{% else %}btn-outline-primary{% endif %}"
+                    style="border-radius: 0;">
+                🍽️ Menu
+            </button>
+
+            <!-- Reviews Butonu -->
+            <button type="submit" name="active_tab" value="reviews"
+                    class="btn flex-fill {% if active_tab == 'reviews' %}btn-primary{% else %}btn-outline-primary{% endif %}"
+                    style="border-radius: 0; border-left: 1px solid #dee2e6;">
+                ⭐ Reviews
+            </button>
+        </form>
+    </div>
+
+    {% if active_tab == 'menu' %}
+        <!-- MENU CONTENT -->
+        <div id="menu-content">
+            {% if restaurant_menu %}
+                {% set ns = namespace(current_category=None) %}
+                {% for product in restaurant_menu %}
+                    {% if ns.current_category != product['category'] %}
+                        {% if not loop.first %}</tbody></table></div>{% endif %}
+                        <div class="mb-4">
+                            <h5 class="mt-3 mb-2 border-bottom pb-2 text-primary">{{ product['category'] }}</h5>
+                            <div class="table-responsive">
+                                <table class="table align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                            <th class="text-center">Add to Cart</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                    {% endif %}
+
+                    <tr>
+                        <td><strong>{{ product['name'] }}</strong></td>
+                        <td>{{ product['description'] }}</td>
+                        <td>{{ product['price'] }}</td>
+                        <td>
+                            {% if product['is_for_sale'] %}
+                                <span class="badge bg-success">For Sale</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Not For Sale</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if product['is_for_sale'] %}
+                                <form action="/add-to-cart" method="post" class="d-inline">
+                                    <input type="hidden" name="business_id" value="{{ restaurant_info['id'] }}">
+                                    <input type="hidden" name="product_id" value="{{ product['id'] }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">🛒 Add</button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-sm btn-outline-secondary" disabled>🚫 Unavailable</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% set ns.current_category = product['category'] %}
+                    {% if loop.last %}</tbody></table></div>{% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="text-muted text-center mt-4">This restaurant has no products listed.</p>
+            {% endif %}
+        </div>
+
+    {% else %}
+        <!-- REVIEWS CONTENT -->
+        <div id="reviews-content">
+            {% if reviews and reviews|length > 0 %}
+                {% for review in reviews %}
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 fw-semibold">{{ review['user_name'] }}</h6>
+                                <small class="text-muted">{{ review['date'] }}</small>
+                            </div>
+                            <p class="mb-1">
+                                {% for i in range(1, 6) %}
+                                    {% if i <= review['rating'] %}
+                                        <span style="color: gold;">★</span>
+                                    {% else %}
+                                        <span style="color: #ccc;">★</span>
+                                    {% endif %}
+                                {% endfor %}
+                                <small>({{ review['rating'] }})</small>
+                            </p>
+                            <p class="mb-1">{{ review['comment'] or 'No comment provided.' }}</p>
+                            {% if review['answer'] %}
+                                <div class="alert alert-light border mt-2 mb-0">
+                                    <strong>Owner's reply:</strong> {{ review['answer'] }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted text-center mt-4">This restaurant has no reviews yet.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

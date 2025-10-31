@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Your Cart
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h3 class="mb-4 text-center text-primary">🛒 Your Shopping Cart</h3>
+
+    {% if order_list and order_list|length > 0 %}
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-hover align-middle text-center mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Restaurant</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_list %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ business_name }}</td>
+                            <td>{{ item.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.subtotal }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="align-middle">
+                    <tr class="fw-bold border-top">
+                        <td colspan="5" class="text-end">Total:</td>
+                        <td class="text-end">{{ total }}</td>
+                    </tr>
+                    {% if not is_hidden %}
+                    <tr>
+                        <td colspan="3" class="text-end pe-2">
+                            <form action="/clear-cart" method="post" class="d-inline">
+                                <input type="hidden" name="from_cart" value="cart">
+                                <button class="btn btn-outline-danger w-100" type="submit">🧹 Clear Cart</button>
+                            </form>
+                        </td>
+                        <td colspan="3" class="text-start ps-2">
+                            <form action="/purchase" method="post" class="d-inline">
+                                <button class="btn btn-primary w-100" type="submit">💳 Purchase</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <form action="/restaurants" method="post">
+                                <button class="btn btn-primary w-100" type="submit">🍴 Back to Restaurants</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tfoot>
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center text-muted mt-5">
+            <h5>Your cart is empty 💤</h5>
+            <p>Browse restaurants and add something delicious!</p>
+            <form action="/restaurants" method="post">
+                <button class="btn btn-outline-primary px-4">🍽️ View Restaurants</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

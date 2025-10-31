@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-4">
+        <h3 class="mb-4 text-center text-primary">Your Dashboard</h3>
+
+        {% if orders %}
+            <div class="table-responsive shadow-sm rounded">
+                <table class="table table-striped table-hover align-middle text-center mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Created At</th>
+                            <th>Count</th>
+                            <th>Customer Address</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.date }}</td>
+                                <td>{{ order.count }}</td>
+                                <td>{{ order.address }}</td>
+                                <td>{{ order.total }}</td>
+                                <td>
+                                <form action="/update-status" method="post" class="d-inline-block mt-2">
+                                    <input type="hidden" name="order_id" value="{{ order.id }}">
+                                    <select name="status" class="form-select d-inline w-auto">
+                                        <option disabled {% if order.status == "received" %}selected{% endif %} value="" >Received</option>
+                                        <option value="preparing" {% if order.status == "preparing" %}selected{% endif %}>Preparing</option>
+                                        <option value="onway" {% if order.status == "onway" %}selected{% endif %}>On the Way</option>
+                                        <option value="completed" {% if order.status == "completed" %}selected{% endif %}>Completed</option>
+                                        <option value="canceled" {% if order.status == "canceled" %}selected{% endif %}>Canceled</option>
+                                </select>
+                                    <button class="btn btn-outline-primary ms-2 px-4" type="submit">Update</button>
+                                </form>
+                                </td>
+                                <td>
+                                    <form action="/order-details" method="post">
+                                        <input type="hidden" name="order_id" value="{{order.id}}">
+                                        <button class="btn btn-primary w-100" type="submit" >View Details</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+        {% else %}
+            <div class="text-center text-muted mt-5">
+                <h5>We Received No Order 💤</h5>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

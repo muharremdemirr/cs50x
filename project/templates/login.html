@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+        <form action="/login" method="post"
+              class="p-4 border rounded shadow-sm bg-white text-center"
+              style="width: 320px;">
+            <h3 class="mb-4">Log In</h3>
+
+            <div class="mb-3 text-start">
+                <select name="role" class="form-select" required>
+                    <option value="" disabled selected>Select</option>
+                    <option value="user">Customer</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control" name="email" placeholder="E-Mail" type="email" required>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control" name="password" placeholder="Password" type="password" required>
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit">Log In</button>
+
+            <div class="mt-3">
+                <small>Don’t have an account? <a href="/register">Register</a></small>
+            </div>
+        </form>
+    </div>
+{% endblock %}

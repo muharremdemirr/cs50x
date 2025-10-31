@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change Password
+{% endblock %}
+
+{% block main %}
+<div class="container mt-5" style="max-width: 400px;">
+    <h3 class="text-center mb-4 text-primary">🔒 Change Password</h3>
+
+    <form action="/change" method="post" class="shadow-sm p-4 rounded bg-light">
+        <div class="mb-3">
+            <input class="form-control" name="password" placeholder="Old Password" required type="password">
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control" name="new-password" placeholder="New Password" required type="password">
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control" name="repeat-password" placeholder="Repeat Password" required type="password">
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary px-5" type="submit">Change Password</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

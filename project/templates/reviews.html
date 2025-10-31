@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Reviews
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+
+    {% if session['role'] == 'user' %}
+        <h3 class="text-center mb-4">Your Reviews</h3>
+
+        {% if reviews %}
+            {% for r in reviews %}
+            <div class="border rounded p-3 mb-3 bg-light shadow-sm">
+                <div class="d-flex justify-content-between">
+                    <strong>{{ r.business_name }}</strong>
+                    <span class="text-warning">⭐ {{ r.rating }}</span>
+                </div>
+                <p class="mt-2 mb-1">{{ r.comment }}</p>
+
+                {% if r.answer %}
+                    <div class="ms-3 mt-2 p-2 bg-white border rounded">
+                        <small><strong>Business reply:</strong> {{ r.answer }}</small>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">You haven't written any reviews yet.</p>
+        {% endif %}
+
+    {% elif session['role'] == 'business' %}
+        <h3 class="text-center mb-4">Reviews for Your Business</h3>
+
+        <div class="text-center mb-3">
+            <h5>⭐ Average Rating: {{ avg_rating }}</h5>
+        </div>
+
+        {% if reviews %}
+            {% for r in reviews %}
+            <div class="border rounded p-3 mb-3 bg-light shadow-sm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong>{{ r.user_name }}</strong>
+                    <span class="text-warning">⭐ {{ r.rating }}</span>
+                </div>
+                <p class="mt-2 mb-1">{{ r.comment }}</p>
+
+                {% if r.answer %}
+                    <div class="ms-3 mt-2 p-2 bg-white border rounded">
+                        <small><strong>Your Reply:</strong> {{ r.answer }}</small>
+                    </div>
+                {% else %}
+                    <form action="/review" method="post" class="mt-3">
+                        <input type="hidden" name="order_id" value="{{ r.order_id }}">
+                        <div class="input-group">
+                            <input
+                                name="answer"
+                                type="text"
+                                placeholder="Write a reply..."
+                                class="form-control"
+                                required
+                            >
+                            <button class="btn btn-outline-primary" type="submit">Reply</button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">No reviews yet.</p>
+        {% endif %}
+
+    {% else %}
+        <h3 class="text-center mb-4">Business Reviews</h3>
+
+        <div class="text-center mb-3">
+            <h5>⭐ Average Rating: {{ avg_rating if avg_rating else "No ratings yet" }}</h5>
+        </div>
+
+        {% if reviews %}
+            {% for r in reviews %}
+            <div class="border rounded p-3 mb-3 bg-light shadow-sm">
+                <strong>{{ r.user_name }}</strong>
+                <span class="text-warning">⭐ {{ r.rating }}</span>
+                <p class="mt-2 mb-0">{{ r.comment }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-muted">No reviews yet.</p>
+        {% endif %}
+    {% endif %}
+
+</div>
+{% endblock %}

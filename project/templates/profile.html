@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block main %}
+
+    {% if session["role"] == "business" %}
+        <div class="d-flex justify-content-center align-items-center gap-2">
+            <form action="/set-state" method="post" class="mb-4 text-center">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                    <label>Open/Close: </label>
+                    <select name="state" class="form-select w-auto">
+                        <option value="open" {% if data.status == "open" %}selected{% endif %}>Open</option>
+                        <option value="close" {% if data.status == "close" %}selected{% endif %}>Close</option>
+                    </select>
+                    <button class="btn btn-primary" type="submit">Confirm</button>
+                </div>
+            </form>
+
+            <div></div>
+
+            <form action="/set-min" method="post" class="mb-4 text-center">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                    <label>Min Order Amount: </label>
+                    <input name="min-amount" value="{{ data.min_amount }}" min="0.0" required type="number" step="0.01">
+                    <button class="btn btn-primary" type="submit">Set Min</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <form action="/profile" method="post" class="p-4 border rounded shadow-sm bg-white mx-auto" style="max-width: 800px;">
+            <h4 class="mb-4 text-center">Edit Profile</h4>
+
+            <div class="row g-3">
+                {% if session["role"] == "user" %}
+                    <div class="col-md-6">
+                        <label>First Name:</label>
+                        <input name="name" class="form-control" value="{{ data.name }}" required type="text">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Last Name:</label>
+                        <input name="surname" class="form-control" value="{{ data.surname }}" required type="text">
+                    </div>
+                {% else %}
+                    <div class="col-md-12">
+                        <label>Name:</label>
+                        <input name="name" class="form-control" value="{{ data.name }}" required type="text">
+                    </div>
+                {% endif %}
+
+                <div class="col-md-6">
+                    <label>E-Mail:</label>
+                    <input name="email" class="form-control" value="{{ data.email }}" required type="email">
+                </div>
+
+                <div class="col-md-6">
+                    <label>Phone Number:</label>
+                    <input name="phone" class="form-control" value="{{ data.phone }}" required type="text">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Country:</label>
+                    <input name="country" class="form-control" value="{{ data.country }}" required type="text">
+                </div>
+
+                <div class="col-md-4">
+                    <label>City:</label>
+                    <input name="city" class="form-control" value="{{ data.city }}" required type="text">
+                </div>
+
+                <div class="col-md-4">
+                    <label>Province:</label>
+                    <input name="province" class="form-control" value="{{ data.province }}" required type="text">
+                </div>
+
+                <div class="col-12">
+                    <label>Address:</label>
+                    <textarea name="address" class="form-control" rows="3" required>{{ data.address }}</textarea>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <button class="btn btn-primary px-4" type="submit">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+{% if session["role"] == "business" %}
+    <div class="container mt-5">
+        <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+            <div class="card-header text-center bg-primary text-white fw-bold">
+                Business Summary
+            </div>
+            <div class="card-body p-4">
+                <table class="table table-borderless align-middle mb-0">
+                    <tbody>
+                        <tr>
+                            <td><strong>Your Receivable:</strong></td>
+                            <td class="text-success fw-semibold text-end">+{{ data.receivable }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>App Commissions:</strong></td>
+                            <td class="text-danger fw-semibold text-end">-{{ data.commission }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>VAT:</strong></td>
+                            <td class="text-danger fw-semibold text-end">-{{ data.vat }}</td>
+                        </tr>
+                        <tr class="table-light border-top">
+                            <td><strong>Your Net Earning:</strong></td>
+                            <td class="text-success fw-bold text-end">+{{ data.net }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+{% endblock %}

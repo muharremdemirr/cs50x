@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Leave A Review
+{% endblock %}
+
+{% block main %}
+<style>
+.rating {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  display: inline-flex;
+  gap: 0.15rem;
+}
+.rating input {
+  display: none;
+}
+.rating label {
+  font-size: 1.8rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+  position: relative;
+}
+
+.rating label::before {
+  content: "★";
+}
+
+.rating input:checked ~ label {
+  color: gold;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: gold;
+}
+
+.rating label.half::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: gold;
+}
+</style>
+
+<div class="container mt-4 text-center">
+    <h2 class="mb-3">Leave a Review</h2>
+
+    <form action="/review" method="post" class="d-inline-block p-4 border rounded-3 shadow-sm bg-light" style="max-width: 500px; width: 100%;">
+        <!-- Order ID -->
+        <input type="hidden" name="order_id" value="{{ order.id }}">
+
+        <!-- Rating -->
+        <div class="mb-3">
+            <label class="form-label d-block mb-2 fw-semibold">Your Rating:</label>
+            <div class="rating">
+
+                {% for i in range(10, 0, -1) %}
+                    {% set value = i / 2 %}
+                    <input type="radio" id="star{{ value }}" name="rating" value="{{ value }}" {% if order.rating == value %}checked{% endif %}>
+                    {% if i % 2 == 1 %}
+                        <label for="star{{ value }}" class="half" title="{{ value }} stars"></label>
+                    {% else %}
+                        <label for="star{{ value }}" title="{{ value }} stars"></label>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Comment -->
+        <div class="mb-3">
+            <label for="comment" class="form-label fw-semibold">Your Comment:</label>
+            <textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Write your thoughts about your order..." >{{ order.comment }}</textarea>
+        </div>
+
+        <!-- Submit -->
+        <button class="btn btn-primary px-4" type="submit">Submit Review</button>
+    </form>
+</div>
+{% endblock %}

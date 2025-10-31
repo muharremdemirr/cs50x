@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Inventory
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4">Manage Your Products</h3>
+
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body">
+            <form action="/inventory" method="post" class="row g-3">
+                <input type="hidden" name="product_id" value="{{ selected_product.id if selected_product else '' }}">
+
+                <div class="col-md-6">
+                    <label class="form-label">Name</label>
+                    <input name="name" class="form-control" placeholder="Name" required
+                           value="{{ selected_product.name if selected_product else '' }}">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Category</label>
+                    <input name="category" class="form-control" placeholder="Category" required
+                           value="{{ selected_product.category if selected_product else '' }}">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Price</label>
+                    <input name="price" type="number" step="0.01" min="0.1" class="form-control"
+                           placeholder="Price" required
+                           value="{{ selected_product.price if selected_product else '' }}">
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">For Sale</label>
+                    <select name="is_for_sale" class="form-select" required>
+                        <option disabled value="">Select</option>
+                        <option value="1" {% if selected_product and selected_product.is_for_sale == 1 %}selected{% endif %}>Yes</option>
+                        <option value="0" {% if selected_product and selected_product.is_for_sale == 0 %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" placeholder="Description" rows="2" required>{{ selected_product.description if selected_product else '' }}</textarea>
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">
+                        {% if selected_product %}Save Changes{% else %}Add Product{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="table-responsive">
+        {% if products %}
+            <table class="table table-striped table-hover align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>For Sale</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>
+                            {% if product.is_for_sale == 1 %}
+                                <span class="badge bg-success">Yes</span>
+                            {% else %}
+                                <span class="badge bg-secondary">No</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form action="/inventory" method="post" class="d-inline">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <button class="btn btn-sm btn-outline-primary">Edit</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="text-center text-muted mt-5">
+                <h5>No Product Added</h5>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
