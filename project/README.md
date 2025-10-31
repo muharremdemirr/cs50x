@@ -1,5 +1,5 @@
 # ORDERLY
-#### Video Demo:  <URL HERE>
+
 #### Description:
 
 Orderly is a flask and SQL based food ordering web application as the final project of CS50x 2025. All food ordering workflow is applied in this project. A database was created for this project to store and manage all the information is used at the workflow. Moreover, Flask is used for creating back-end of project. The application uses Flask-Session to manage user authentication. Login status and role (user or business) are stored in the session to control access to pages and features securely. 
