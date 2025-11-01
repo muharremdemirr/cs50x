@@ -352,7 +352,6 @@ def leave_reviwe():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # login funtion that I stole from cs50 stuffs
 
     # Forget any user_id
     session.clear()
@@ -422,7 +421,6 @@ def login():
 
 @app.route("/logout")
 def logout():
-    #Logour function that I stole from CS50 stuffs
 
     # Forget any user_id
     session.clear()
